@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div style="text-align: center;">
+        <h2>Book List</h2>
+        <div>
+            <table style="border: 1px solid black;margin-left: auto; margin-right:auto">
+                <tr>
+                    <th style="border: 1px solid black;">Cover</th>
+                    <th style="border: 1px solid black;">Title</th>
+                    <th style="border: 1px solid black;">Author</th>
+                    <th style="border: 1px solid black;">Download</th>
+                    <th style="border: 1px solid black;">Action</th>
+                </tr>
+
+                {% for book in books%}
+                <tr>
+                    <td style="border: 1px solid black;">
+                        {% if book.cover %}
+                            <img src="{{ book.cover.url }}" alt="{{ book.title }}" style="width: 100px">
+                        {% else %}
+                            <span>No cover</span>
+                        {% endif %}
+
+                    </td>
+                    <td style="border: 1px solid black;">{{book.title}}</td>
+                    <td style="border: 1px solid black;">{{book.author}}</td>
+                    <td style="border: 1px solid black;"><a href="{{book.pdf.url}}" target="_blank"> Download </a> </td>
+                    <td>
+                        <form method="post" action="{% url 'delete_book' book.pk %}">
+                            {% csrf_token %}
+                            <input type="submit" value="Delete">
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+</body>
+
+</html>

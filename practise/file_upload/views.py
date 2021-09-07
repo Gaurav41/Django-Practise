@@ -1,7 +1,9 @@
 from django.http.response import HttpResponse
-from django.shortcuts import render
-from .forms import FileUploadForm
+from django.shortcuts import render,redirect
+from .forms import FileUploadForm, BookForm
 from django.core.files.storage import FileSystemStorage
+from .models import Book
+
 # Create your views here.
 def index(request):
     context = {}
@@ -23,3 +25,27 @@ def index(request):
         context = { 'form': FileUploadForm()}
     
     return render(request,"file_upload/index.html",context)
+
+
+def book_list(request):
+    books = Book.objects.all()
+    return render(request,'file_upload/book_list.html',{'books':books})
+
+def upload_book(request):
+    if request.method == "POST":
+        form = BookForm(request.POST,request.FILES)
+        if form.is_valid:
+            form.save()
+            return redirect(book_list)
+    
+    else:
+        form = BookForm()
+        context = {'form':form}
+        return render(request,'file_upload/upload_book.html',context)
+
+def delete_book(request,pk):
+    if request.method == 'POST':
+        book = Book.objects.get(pk=pk)
+        book.delete()
+    return redirect(book_list)
+    
