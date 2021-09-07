@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'middleware_demo',
     'manage_static_files',
     'file_upload',
+    'cookie_session',
 
 ]
 
@@ -124,7 +125,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
@@ -155,3 +156,18 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 DJANGO_SETTINGS_MODULE = 'practise.settings'
+
+
+# Cookie setting
+
+SESSION_COOKIE_AGE=400
+SESSION_COOKIE_NAME='mysessionname'
+SESSION_COOKIE_PATH="/" # DEFAULT
+SESSION_COOKIE_HTTPONLY = True  # DEFAULT
+# SESSION_COOKIE_SECURE = True # DEFAULT False
+
+
+# for cookied based session
+# SESSION_ENGINE="django.contrib.sessions.backends.signed_cookies" 
+# for file based session
+# SESSION_ENGINE="django.contrib.sessions.backends.file"
